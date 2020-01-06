@@ -113,8 +113,10 @@ namespace BananaSplit
         {
             if (@object is Projectile)
             {
-                health =- 1;
-                //GameWorld.Instance.health -= 1;
+                this.health -= 1;
+
+                Debug.WriteLine(this.health);
+
                 if (health <= 0)
                 {
                     GameWorld.Instance.gameObjectsToRemove.Add(this);

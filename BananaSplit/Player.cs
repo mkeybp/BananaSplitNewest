@@ -12,6 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
+
+
 namespace BananaSplit
 {
     class Player : GameObject
@@ -20,7 +22,6 @@ namespace BananaSplit
         KeyboardState previousKBState;
 
         private bool isGrounded = true;
-        private bool isAlive = true;
 
         public Player()
         {
@@ -34,7 +35,7 @@ namespace BananaSplit
 
         private static Vector2 playerPosition;
 
-    
+
         public static Vector2 PlayerPosition
         {
             get { return playerPosition; }
@@ -51,7 +52,7 @@ namespace BananaSplit
             {
                 sprites[i] = content.Load<Texture2D>(i + 1 + ("player"));
             }
-
+  
             fps = 8;
 
             sprite = sprites[0];
@@ -74,19 +75,21 @@ namespace BananaSplit
             }
             isGrounded = false;
 
-            ////Get these values however you like.
-            //DateTime productLaunchDateTime = DateTime.Parse("1/7/2020 12:00:01 AM");
-            //DateTime startDate = DateTime.Now;
-
-            ////Calculate countdown timer.
-            //TimeSpan t = productLaunchDateTime - startDate;
-            //string countDown = string.Format("{0} Days, {1} Hours, {2} Minutes, {3} Seconds til launch.", t.Days, t.Hours, t.Minutes, t.Seconds);
-
-
-   
-
-
-            ////Debug.WriteLine(countDown);
+            switch (direction)
+            {
+                case Direction.Right:
+                    for (int i = 0; i < sprites.Length; i++)
+                    {
+                        sprites[i] = content.Load<Texture2D>(i + 1 + ("player"));
+                    }
+                    break;
+                case Direction.Left:
+                    for (int i = 0; i < sprites.Length; i++)
+                    {
+                        sprites[i] = content.Load<Texture2D>(i + 1 + ("player_left"));
+                    }
+                    break;
+            }
         }
         private void HandleInput(GameTime gameTime)
         {
@@ -100,27 +103,14 @@ namespace BananaSplit
                 if (kbState.IsKeyDown(Keys.A))
                 {
                     velocity += new Vector2(-1, 0);
-
+                    direction = Direction.Left;
                 }
                 if (kbState.IsKeyDown(Keys.D))
                 {
                     velocity += new Vector2(1, 0);
-
+                    direction = Direction.Right;
                 }
 
-                if (kbState.IsKeyDown(Keys.O))
-                {
-
-                    //Platform platform = new Platform(content.Load<Texture2D>("platform"));
-                    //GameWorld.Instance.gameObjectsToAdd.Add(platform);
-                    //platform.position = new Vector2(0,1020);
-                }
-                if (kbState.IsKeyDown(Keys.O))
-                {
-                    //Platform platform1 = new Platform(content.Load<Texture2D>("platform"));
-                    //GameWorld.Instance.gameObjectsToAdd.Add(platform1);
-                    //platform1.position = new Vector2(300, 1020);
-                }
                 if (kbState.IsKeyDown(Keys.W) && previousKBState.IsKeyUp(Keys.W) && isGrounded == true)
                 {
                     velocity += new Vector2(0, -250);
@@ -132,8 +122,12 @@ namespace BananaSplit
                     Projectile projectile = new Projectile(content.Load<Texture2D>("stone"));
                     GameWorld.Instance.gameObjectsToAdd.Add(projectile);
 
-                    sprite = content.Load<Texture2D>("player_shooting");
-
+                    if (direction == Direction.Right)
+                    {
+                        sprite = content.Load<Texture2D>("player_shooting");
+                    }
+                    else
+                        sprite = content.Load<Texture2D>("player_shooting_left");
                 }
 
 
@@ -142,18 +136,24 @@ namespace BananaSplit
                     Animation(gameTime);
                 }
 
-                    previousKBState = kbState;
+                previousKBState = kbState;
 
             }
 
+
             // Play again
-            if (kbState.IsKeyDown(Keys.Enter))
+                
+            if (GameWorld.Instance.health <= 0 || Player.PlayerPosition.Y >= 1100 || GameWorld.Instance.bananaCounter == 40000)
             {
-                GameWorld.Instance.health = 30;
-                GameWorld.Instance.bananaCounter = 0;
-                Enemy.EnemyPosition = new Vector2(1500, 760);
-                isAlive = true;
-                position = new Vector2(100, 100);
+                isAlive = false;
+                if (kbState.IsKeyDown(Keys.Enter))
+                {
+                    GameWorld.Instance.health = 30;
+                    GameWorld.Instance.bananaCounter = 0;
+                    Enemy.EnemyPosition = new Vector2(1500, 760);
+                    isAlive = true;
+                    position = new Vector2(100, 100);
+                }
             }
 
             Vector2 temp = velocity;
@@ -182,7 +182,7 @@ namespace BananaSplit
             {
                 /// Er sat lavere end der står i raporten, da loot ikke bliver fjernet ved collision
                 /// Så det går alt for hurtigt med at samle alle bananer op
-                GameWorld.Instance.bananaCounter += 100;
+                GameWorld.Instance.bananaCounter += 1000;
                 //isAlive = false;
                 //GameWorld.Instance.gameObjectsToRemove.Add(Loot);
 
@@ -193,8 +193,7 @@ namespace BananaSplit
             }
             else if (@object is Boost)
             {
-                GameWorld.Instance.bananaCounter += 1000;
-
+                GameWorld.Instance.bananaCounter += 4000;
             }
             if (@object is Platform)
             {
@@ -230,6 +229,30 @@ namespace BananaSplit
 
 
                 }
+
+                //Rectangle collisionRect = Rectangle.Intersects(Rectangle., P.Rectangle);
+                //if (intersection.Height > 0)
+                //{
+                //    player.Rect -= intersection.Height;
+                //}
+
+
+                //if (this.Rectangle.Bottom > P.Rectangle.Top && this.Rectangle.Bottom < P.Rectangle.Bottom) // Object is above
+                //    player.Rect.Pos += new Vector2(0, platform.Top - player.Bottom);
+
+                //else if (player.Top < platform.Bottom && player.Top > platform.Top) // Object below
+                //    player.Rect.Pos += new Vector2(0, platform.Bottom - player.Top);
+
+                //if (player.Left < platform.Right && player.Left > platform.Left) // Object to the left
+                //    player.Rect.Pos += new Vector2(platform.Right - player.Left, 0);
+
+                //else if (player.Right > platform.Left && player.Right < platform.Right) // Object to the right
+                //    player.Rect.Pos += new Vector2(platform.Left - player.Right, 0);
+
+
+
+
+
 
 
             }

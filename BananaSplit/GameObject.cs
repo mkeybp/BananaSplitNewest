@@ -10,8 +10,13 @@ using System.Threading.Tasks;
 
 namespace BananaSplit
 {
+    public enum Direction { Left, Right }
     public abstract class GameObject
     {
+
+        public Direction direction = Direction.Right;
+
+
         //Flere sprites i et array.
         protected Texture2D[] sprites;
         //En sprite.

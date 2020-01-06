@@ -230,7 +230,7 @@ namespace BananaSplit
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
             spriteBatch.Draw(background, new Vector2(0, 0), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
 
@@ -251,15 +251,14 @@ namespace BananaSplit
 
 
 
-            spriteBatch.Draw(bananaPoints, new Vector2(10, 70), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            spriteBatch.DrawString(text, ": " + bananaCounter, new Vector2(65, 75), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(bananaPoints, new Vector2(10, 70), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
+            spriteBatch.DrawString(text, ": " + bananaCounter, new Vector2(65, 75), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
 
             int bananasNeeded = 40000 - bananaCounter;
-            Debug.WriteLine(Player.PlayerPosition);
+            //Debug.WriteLine(Player.PlayerPosition);
             // GameoverTxT
             if (health <= 0 || Player.PlayerPosition.Y >= 1100)
             {
-                //isAlive = false;
                 spriteBatch.DrawString(text,
                                        "You only needed " + bananasNeeded + " more bananas, to remove banana-food-waste for today.\n See you again tomorrow for 40.000 more \n BUT you gathered enough bananas to produce {x_amount} of ice cream \n\n PRESS ENTER TO PLAY AGAIN",
                                        new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
@@ -268,7 +267,11 @@ namespace BananaSplit
                                        Vector2.Zero,
                                        1,
                                        SpriteEffects.None,
-                                       0);
+                                       1f);
+
+
+                spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
             }
             if (bananaCounter >= 40000)
             {
@@ -277,7 +280,6 @@ namespace BananaSplit
             if (bananaCounter == 40000 && health > 0)
             {
 
-                //spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
 
 
                 spriteBatch.DrawString(text,
@@ -289,7 +291,7 @@ namespace BananaSplit
                                  Vector2.Zero,
                                  1,
                                  SpriteEffects.None,
-                                 0);
+                                 1f);
             }
 
 
