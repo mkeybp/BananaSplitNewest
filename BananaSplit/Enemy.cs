@@ -117,6 +117,21 @@ namespace BananaSplit
                 if (positiveDistanceX > 50 || positiveDistanceY > 50)
                     position += direction * this.speed;
             }
+
+
+
+            // # Simple EnemyMove #
+            //distance.X = Player.PlayerPosition.X - this.position.X;
+            //distance.Y = Player.PlayerPosition.Y - this.position.Y;
+
+            ////// Enemys only hunts you if your in a certain range
+            //if (distance.X >= -950)
+            //{
+            //    direction = new Vector2(Player.PlayerPosition.X, Player.PlayerPosition.Y);
+
+            //    //if (distance.X < 1200)
+            //    position += direction * this.speed;
+            //}
         }
         #endregion ENEMYMOVE FROM ANOTHER PROJECT
 

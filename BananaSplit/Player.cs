@@ -218,9 +218,6 @@ namespace BananaSplit
                 /// Er sat lavere end der står i raporten, da loot ikke bliver fjernet ved collision
                 /// Så det går alt for hurtigt med at samle alle bananer op
                 GameWorld.Instance.bananaCounter += 1000;
-                //isAlive = false;
-                //GameWorld.Instance.gameObjectsToRemove.Add(Loot);
-
             }
             else if (@object is Enemy)
             {
@@ -283,11 +280,6 @@ namespace BananaSplit
 
                 //else if (player.Right > platform.Left && player.Right < platform.Right) // Object to the right
                 //    player.Rect.Pos += new Vector2(platform.Left - player.Right, 0);
-
-
-
-
-
 
 
             }

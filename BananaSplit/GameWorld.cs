@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace BananaSplit
 {
@@ -34,7 +36,16 @@ namespace BananaSplit
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        public float timer = 2000f;
 
+        public void Timer()
+        {
+
+            if (timer <= 0)
+            {
+                timer = 0;
+            }
+        }
         public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,7 +61,7 @@ namespace BananaSplit
         /// and initialize them as well.
         /// </summary>
         /// 
-
+    
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -59,10 +70,6 @@ namespace BananaSplit
             graphics.PreferredBackBufferHeight = 1080;
             graphics.ApplyChanges();
             gameObjects.Add(new Player());
-            //gameObjects.Add(new Enemy());
-            //gameObjects.Add(new Platform());
-            //gameObjects.Add(new Loot());
-            //gameObjects.Add(new Boost());
 
             base.Initialize();
         }
@@ -75,20 +82,13 @@ namespace BananaSplit
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //soundEffects = new List<SoundEffect>();
 
-            //test = Content.Load<Texture2D>("test");
             background = Content.Load<Texture2D>("background");
             heartFull = Content.Load<Texture2D>("heartfull");
             bananaPoints = Content.Load<Texture2D>("smallBanana");
             text = Content.Load<SpriteFont>("gameOver");
             song = Content.Load<Song>("By the Fire");
 
-            //soundEffects.Add(Content.Load<SoundEffect>("trashcan_impact"));
-
-            //soundEffects[0].Play();
-            //var instance = soundEffects[0].CreateInstance();
-            //instance.Play();
 
             MediaPlayer.Play(song);
             MediaPlayer.IsRepeating = true;
@@ -212,6 +212,10 @@ namespace BananaSplit
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
+
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -277,13 +281,18 @@ namespace BananaSplit
             }
 
 
+            // Timer
+            spriteBatch.DrawString(text, "Time left: " + timer--, new Vector2(15, 130), Color.White);
+
+
+
 
             spriteBatch.Draw(bananaPoints, new Vector2(10, 70), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
             spriteBatch.DrawString(text, ": " + bananaCounter, new Vector2(65, 75), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
 
             int bananasNeeded = 40000 - bananaCounter;
             // GameoverTxT
-            if (health <= 0 || Player.PlayerPosition.Y >= 1100)
+            if (health <= 0 || Player.PlayerPosition.Y >= 1100 || timer <= 0)
             {
                 spriteBatch.DrawString(text,
                                        "You only needed " + bananasNeeded + " more bananas, to remove banana-food-waste for today.\n See you again tomorrow for 40.000 more \n BUT you gathered enough bananas to produce {x_amount} of ice cream \n\n PRESS ENTER TO PLAY AGAIN",
@@ -306,10 +315,8 @@ namespace BananaSplit
             if (bananaCounter == 40000 && health > 0)
             {
 
-
-
                 spriteBatch.DrawString(text,
-                                 "Congrats! You made it to level 2! \n In England they discard around 1.500.000 bananas EVERY day!\n Collect all 1.500.000 to advance to win the game \n and to produce {x_amount} of ice cream!"
+                                 "Congrats! You made it to level 2! \n In England they discard around 1.500.000 bananas EVERY day!\n Collect all 1.500.000 to win the game \n and to produce {x_amount} of ice cream!"
 ,
                                  new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
                                  Color.White,
@@ -318,6 +325,8 @@ namespace BananaSplit
                                  1,
                                  SpriteEffects.None,
                                  1f);
+                spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
             }
 
 

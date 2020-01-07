@@ -14,6 +14,10 @@ namespace BananaSplit
     public enum Direction { Right, Left }
     public abstract class GameObject
     {
+   
+
+
+
 
         public Direction direction = new Direction();
         public List<SoundEffect> soundEffects;

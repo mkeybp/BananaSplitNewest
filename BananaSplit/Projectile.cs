@@ -14,8 +14,6 @@ namespace BananaSplit
 {
     class Projectile : GameObject
     {
-        //private SoundEffect trashcan;
-
         public Projectile(Texture2D loadedTexture)
         {
             // If direction right use this
@@ -30,11 +28,6 @@ namespace BananaSplit
                 this.position = new Vector2(Player.PlayerPosition.X + 10, Player.PlayerPosition.Y + 125);
             }
 
-            //soundEffects = new List<SoundEffect>();
-
-
-
-            //velocity = new Vector2(10, 0);
             sprite = loadedTexture;
             isAlive = true;
         }
@@ -82,6 +75,7 @@ namespace BananaSplit
             {
                 this.isAlive = false;
 
+                // if collition -> Add last fired projectile to gameObjectsToRemove
                 GameWorld.Instance.gameObjectsToRemove.Add(this);
             }
         }
