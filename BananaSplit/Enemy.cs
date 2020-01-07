@@ -67,10 +67,8 @@ namespace BananaSplit
             {
                 position = new Vector2(0, 750);
             }
-            //if (Ene)
-            //{
+       
 
-            //}
         }
 
         /// <summary>
@@ -86,26 +84,28 @@ namespace BananaSplit
         private void EnemyMove(GameTime gameTime)
         {
             // Calculates the distance from the player and the enemy
-            distance.X = Player.PlayerPosition.X - position.X;
-            distance.Y = Player.PlayerPosition.Y - position.Y;
+            distance.X = Player.PlayerPosition.X - this.position.X;
+            distance.Y = Player.PlayerPosition.Y - this.position.Y;
 
-            rotation = (float)Math.Atan2(distance.X, -distance.Y);
-            direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
-
-            float positiveDistanceX = distance.X;
-            float positiveDistanceY = distance.Y;
-            if (distance.X < 0)
+            // Enemys only hunts you if your in a certain range
+            if (distance.X >= -950)
             {
-                positiveDistanceX *= -1;
+                rotation = (float)Math.Atan2(distance.X, -distance.Y);
+                direction = new Vector2((float)Math.Cos(MathHelper.ToRadians(90) - rotation), -(float)Math.Sin(MathHelper.ToRadians(90) - rotation));
 
+                float positiveDistanceX = distance.X;
+                float positiveDistanceY = distance.Y;
+                if (distance.X < 0)
+                {
+                    positiveDistanceX *= -1;
+
+                }
+                if (distance.Y < 0)
+                    positiveDistanceY *= -1;
+
+                if (positiveDistanceX > 50 || positiveDistanceY > 50)
+                    position += direction * this.speed;
             }
-            if (distance.Y < 0)
-                positiveDistanceY *= -1;
-
-            if (positiveDistanceX > 50 || positiveDistanceY > 50)
-                position += direction * this.speed;
-
-
         }
         #endregion ENEMYMOVE FROM ANOTHER PROJECT
 
@@ -115,7 +115,6 @@ namespace BananaSplit
             {
                 this.health -= 1;
 
-                Debug.WriteLine(this.health);
 
                 if (health <= 0)
                 {

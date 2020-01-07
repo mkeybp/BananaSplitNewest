@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,13 +23,13 @@ namespace BananaSplit
         KeyboardState previousKBState;
 
         private bool isGrounded = true;
-
         public Player()
         {
             speed = 50f;
             position = new Vector2(0, 760);
             GameWorld.Instance.health = 30;
             isAlive = true;
+            soundEffects = new List<SoundEffect>();
 
         }
 
@@ -52,10 +53,18 @@ namespace BananaSplit
             {
                 sprites[i] = content.Load<Texture2D>(i + 1 + ("player"));
             }
-  
+
             fps = 8;
 
             sprite = sprites[0];
+
+
+            soundEffects.Add(content.Load<SoundEffect>("gunshot"));
+
+            //soundEffects[0].Play();
+            var instance = soundEffects[0].CreateInstance();
+            //instance.IsLooped = true;
+            //instance.Play();
         }
 
         public override void Update(GameTime gameTime)
@@ -99,6 +108,17 @@ namespace BananaSplit
 
             if (isAlive == true)
             {
+                // TEST TO SWITCH BETWEEN LEVELS
+                if (kbState.IsKeyDown(Keys.L))
+                {
+                    GameWorld.Instance.level = false;
+                 }
+                if (kbState.IsKeyDown(Keys.T))
+                {
+                    GameWorld.Instance.level = true;
+                }
+
+                //Debug.WriteLine(GameWorld.Instance.level);
 
                 if (kbState.IsKeyDown(Keys.A))
                 {
@@ -128,6 +148,14 @@ namespace BananaSplit
                     }
                     else
                         sprite = content.Load<Texture2D>("player_shooting_left");
+
+                    soundEffects[0].CreateInstance().Play();
+
+                    if (SoundEffect.MasterVolume == 0.0f)
+                        SoundEffect.MasterVolume = 0.2f;
+                    else
+                        SoundEffect.MasterVolume = 0.0f;
+
                 }
 
 
@@ -142,7 +170,7 @@ namespace BananaSplit
 
 
             // Play again
-                
+
             if (GameWorld.Instance.health <= 0 || Player.PlayerPosition.Y >= 1100 || GameWorld.Instance.bananaCounter == 40000)
             {
                 isAlive = false;

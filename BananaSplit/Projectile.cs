@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace BananaSplit
 {
     class Projectile : GameObject
     {
+        private SoundEffect trashcan;
 
         public Projectile(Texture2D loadedTexture)
         {
@@ -27,8 +30,11 @@ namespace BananaSplit
                 this.position = new Vector2(Player.PlayerPosition.X + 10, Player.PlayerPosition.Y + 125);
             }
 
+            soundEffects = new List<SoundEffect>();
 
-            velocity = new Vector2(10, 0);
+
+
+            //velocity = new Vector2(10, 0);
             sprite = loadedTexture;
             isAlive = true;
         }
@@ -39,9 +45,21 @@ namespace BananaSplit
             {
                 if (direction == Direction.Right)
                 {
+                    velocity = new Vector2(10, 0);
 
                 }
+                if (direction == Direction.Left)
+                {
+                    velocity = new Vector2(-10, 0);
+
+                }
+
                 position += velocity;
+
+                //if (direction == Direction.Left)
+                //{
+                //    position -= velocity;
+                //}
                 Rectangle viewPortRect = new Rectangle(0, 0, GameWorld.Instance.graphics.GraphicsDevice.Viewport.Width, GameWorld.Instance.graphics.GraphicsDevice.Viewport.Height);
                 if (!viewPortRect.Contains(new Point((int)position.X, (int)position.Y)))
                 {
@@ -54,11 +72,17 @@ namespace BananaSplit
 
         public override void LoadContent(ContentManager content)
         {
+            trashcan = content.Load<SoundEffect>("trashcan_impact");
 
+            trashcan.Play();
+            var instance = trashcan.CreateInstance();
+            //instance.IsLooped = true;
+            instance.Play();
         }
         public override void Update(GameTime gameTime)
         {
             UpdateProjectiles();
+            Debug.WriteLine(direction);
 
         }
 
@@ -67,8 +91,19 @@ namespace BananaSplit
             // Removes projectile if it hits an enemy
             if (@object is Enemy)
             {
+                this.isAlive = false;
+                if (SoundEffect.MasterVolume == 0.0f)
+                    SoundEffect.MasterVolume = 0.1f;
+                else
+                    SoundEffect.MasterVolume = 0.0f;
+
                 GameWorld.Instance.gameObjectsToRemove.Add(this);
             }
+            //if (this.isAlive == false)
+            //{
+            //    trashcan.CreateInstance().Play();
+
+            //}
         }
 
     }

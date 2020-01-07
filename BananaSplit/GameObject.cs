@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace BananaSplit
 {
-    public enum Direction { Left, Right }
+    public enum Direction { Right, Left }
     public abstract class GameObject
     {
 
-        public Direction direction = Direction.Right;
+        public Direction direction = new Direction();
+        public List<SoundEffect> soundEffects;
 
 
         //Flere sprites i et array.
