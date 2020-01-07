@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,6 +14,7 @@ namespace BananaSplit
 {
     class Enemy : GameObject
     {
+        private SoundEffect trashcan;
 
         public Enemy(Vector2 position)
         {
@@ -20,6 +22,9 @@ namespace BananaSplit
             speed = 2f;
             isAlive = true;
             health = 2;
+
+            soundEffects = new List<SoundEffect>();
+
         }
 
 
@@ -44,6 +49,13 @@ namespace BananaSplit
                 }
 
                 fps = 3;
+
+                trashcan = content.Load<SoundEffect>("trashcan_impact");
+
+                trashcan.Play();
+                var instance = trashcan.CreateInstance();
+                //instance.IsLooped = true;
+                instance.Play();
             }
         }
 
@@ -67,7 +79,6 @@ namespace BananaSplit
             {
                 position = new Vector2(0, 750);
             }
-       
 
         }
 
@@ -109,12 +120,15 @@ namespace BananaSplit
         }
         #endregion ENEMYMOVE FROM ANOTHER PROJECT
 
+ 
         public override void OnCollision(GameObject @object)
         {
             if (@object is Projectile)
             {
                 this.health -= 1;
 
+                SoundEffect.MasterVolume = 1f;
+                trashcan.CreateInstance().Play();
 
                 if (health <= 0)
                 {

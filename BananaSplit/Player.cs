@@ -73,6 +73,9 @@ namespace BananaSplit
             Move(gameTime);
             playerPosition = this.position;
 
+
+
+
             if (GameWorld.Instance.health <= 10)
             {
                 isAlive = false;
@@ -150,12 +153,7 @@ namespace BananaSplit
                         sprite = content.Load<Texture2D>("player_shooting_left");
 
                     soundEffects[0].CreateInstance().Play();
-
-                    if (SoundEffect.MasterVolume == 0.0f)
-                        SoundEffect.MasterVolume = 0.2f;
-                    else
-                        SoundEffect.MasterVolume = 0.0f;
-
+                    SoundEffect.MasterVolume = 0.5f;
                 }
 
 
@@ -184,9 +182,18 @@ namespace BananaSplit
                 }
             }
 
+            // ## Stands at the same position, but keeps moving ##
+
+            //Vector2 temp = velocity - new Vector2((float)-1.4, 0);
+
+
             Vector2 temp = velocity;
             temp.Y = 0;
             GameWorld.Instance.MoveAll(-temp);
+
+            //Debug.WriteLine(temp);
+            //Debug.WriteLine(Player.PlayerPosition);
+
         }
         private void Move(GameTime gameTime)
         {
