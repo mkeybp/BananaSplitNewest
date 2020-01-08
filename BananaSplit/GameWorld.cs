@@ -138,12 +138,16 @@ namespace BananaSplit
                 gameObjects.Add(new Platform(new Vector2(10900, 900)));
 
                 //Enemy
-                gameObjects.Add(new Enemy(new Vector2(1000, 900)));
-                gameObjects.Add(new Enemy(new Vector2(1000, 100)));
-                gameObjects.Add(new Enemy(new Vector2(1000, 500)));
-                gameObjects.Add(new Enemy(new Vector2(1000, 300)));
+                gameObjects.Add(new Enemy(new Vector2(2365, 500)));
+
+                //gameObjects.Add(new Enemy(new Vector2(1050, 750)));
+                //gameObjects.Add(new Enemy(new Vector2(1400, 750)));
+
 
                 //Loot
+                gameObjects.Add(new Loot(new Vector2(2065, 720)));
+
+
                 gameObjects.Add(new Loot(new Vector2(3000, 900)));
                 gameObjects.Add(new Loot(new Vector2(9000, 100)));
                 gameObjects.Add(new Loot(new Vector2(9050, 150)));
@@ -156,7 +160,7 @@ namespace BananaSplit
                 gameObjects.Add(new Loot(new Vector2(9400, 500)));
 
                 //Boost
-                gameObjects.Add(new Boost(new Vector2(1000, 900)));
+                gameObjects.Add(new Boost(new Vector2(1900, 425)));
             }
 
             // Level 2

@@ -52,10 +52,10 @@ namespace BananaSplit
 
                 trashcan = content.Load<SoundEffect>("trashcan_impact");
 
-                trashcan.Play();
-                var instance = trashcan.CreateInstance();
-                //instance.IsLooped = true;
-                instance.Play();
+                //trashcan.Play();
+                //var instance = trashcan.CreateInstance();
+                ////instance.IsLooped = true;
+                //instance.Play();
             }
         }
 
@@ -143,7 +143,10 @@ namespace BananaSplit
                 this.health -= 1;
 
                 SoundEffect.MasterVolume = 1f;
-                trashcan.CreateInstance().Play();
+           
+                    trashcan.CreateInstance().Play();
+
+                
 
                 if (health <= 0)
                 {

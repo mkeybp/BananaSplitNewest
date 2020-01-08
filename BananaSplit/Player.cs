@@ -26,7 +26,7 @@ namespace BananaSplit
         public Player()
         {
             speed = 50f;
-            position = new Vector2(0, 760);
+            position = new Vector2(0, 750);
             GameWorld.Instance.health = 30;
             isAlive = true;
             soundEffects = new List<SoundEffect>();
