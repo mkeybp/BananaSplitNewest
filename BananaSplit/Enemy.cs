@@ -135,7 +135,7 @@ namespace BananaSplit
         }
         #endregion ENEMYMOVE FROM ANOTHER PROJECT
 
- 
+
         public override void OnCollision(GameObject @object)
         {
             if (@object is Projectile)
@@ -143,10 +143,8 @@ namespace BananaSplit
                 this.health -= 1;
 
                 SoundEffect.MasterVolume = 1f;
-           
-                    trashcan.CreateInstance().Play();
 
-                
+                trashcan.CreateInstance().Play();
 
                 if (health <= 0)
                 {

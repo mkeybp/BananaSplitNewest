@@ -56,6 +56,7 @@ namespace BananaSplit
         public override void Update(GameTime gameTime)
         {
             UpdateProjectiles();
+            Debug.WriteLine(Player.PlayerPosition.Y);
         }
 
         public override void OnCollision(GameObject @object)

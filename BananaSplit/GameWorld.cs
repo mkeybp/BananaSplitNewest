@@ -20,6 +20,7 @@ namespace BananaSplit
         public List<GameObject> gameObjects = new List<GameObject>();
         public List<GameObject> gameObjectsToAdd = new List<GameObject>();
         public List<GameObject> gameObjectsToRemove = new List<GameObject>();
+        public GameState gameState = new GameState();
 
         public static GameWorld Instance;
         Song song;
@@ -27,6 +28,7 @@ namespace BananaSplit
         private Texture2D background;
         private Texture2D heartFull;
         private Texture2D bananaPoints;
+        private Texture2D gameLogo;
         public int bananaCounter;
         public int health;
         private SpriteFont text;
@@ -36,7 +38,7 @@ namespace BananaSplit
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public float timer = 240000f;   // Milliseconds
+        public float timer = 1000f;   // Milliseconds
 
 
         public GameWorld()
@@ -87,7 +89,7 @@ namespace BananaSplit
             bananaPoints = Content.Load<Texture2D>("smallBanana");
             text = Content.Load<SpriteFont>("gameOver");
             song = Content.Load<Song>("By the Fire");
-
+            gameLogo = Content.Load<Texture2D>("bananasplit_logo");
 
             MediaPlayer.Play(song);
             MediaPlayer.Volume = 0.5f;
@@ -139,6 +141,9 @@ namespace BananaSplit
 
                 //Enemy
                 gameObjects.Add(new Enemy(new Vector2(2365, 500)));
+
+                gameObjects.Add(new Enemy(new Vector2(2000, 500)));
+
 
                 //gameObjects.Add(new Enemy(new Vector2(1050, 750)));
                 //gameObjects.Add(new Enemy(new Vector2(1400, 750)));
@@ -216,8 +221,11 @@ namespace BananaSplit
         protected override void Update(GameTime gameTime)
         {
             // Countdown timer
-            timer -= gameTime.ElapsedGameTime.Milliseconds;
 
+            if (gameState == GameState.StartGame)
+            {
+                timer -= gameTime.ElapsedGameTime.Milliseconds;
+            }
             if (timer <= 0)
             {
                 timer = 0;
@@ -274,79 +282,180 @@ namespace BananaSplit
             spriteBatch.Draw(background, new Vector2(0, 0), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
 
 
-            if (health >= 10 || health >= 20 || health >= 30)
+            if (!(gameState == GameState.StartScreen))
             {
-                spriteBatch.Draw(heartFull, new Vector2(10, 15), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                if (health >= 10 || health >= 20 || health >= 30)
+                {
+                    spriteBatch.Draw(heartFull, new Vector2(10, 15), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                }
+                if (health >= 20 || health >= 30)
+                {
+                    spriteBatch.Draw(heartFull, new Vector2(50, 15), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                }
+                if (health >= 30)
+                {
+                    spriteBatch.Draw(heartFull, new Vector2(90, 15), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+
+                }
+
+
+                // Timer
+                if (timer < 4000)
+                {
+                    spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.Yellow, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
+
+                }
+                else
+                    spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
+
+                spriteBatch.Draw(bananaPoints, new Vector2(10, 75), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
+                spriteBatch.DrawString(text, ": " + bananaCounter, new Vector2(65, 65), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
             }
-            if (health >= 20 || health >= 30)
-            {
-                spriteBatch.Draw(heartFull, new Vector2(50, 15), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-            }
-            if (health >= 30)
-            {
-                spriteBatch.Draw(heartFull, new Vector2(90, 15), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-
-            }
 
 
-            // Timer
-            spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
-
-
-
-
-
-            spriteBatch.Draw(bananaPoints, new Vector2(10, 70), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
-            spriteBatch.DrawString(text, ": " + bananaCounter, new Vector2(65, 75), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
-
-            int bananasNeeded = 40000 - bananaCounter;
-            // GameoverTxT
             if (health <= 0 || Player.PlayerPosition.Y >= 1100 || timer <= 0)
             {
-                MediaPlayer.Volume -= 0.1f;
-
-                spriteBatch.DrawString(text,
-                                       "You only needed " + string.Format("{0:0,0}", bananasNeeded) + " more bananas, to remove banana-food-waste for today.\n See you again tomorrow for 40,000 more \n BUT you gathered enough bananas to produce {x_amount} of ice cream \n\n PRESS ENTER TO PLAY AGAIN",
-                                       new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
-                                       Color.White,
-                                       0,
-                                       Vector2.Zero,
-                                       1,
-                                       SpriteEffects.None,
-                                       1f);
-
-
-                spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
-
+                gameState = GameState.GameOver;
             }
-            if (bananaCounter >= 40000)
+            if (bananaCounter >= 40000 && health > 0)
             {
-                bananaCounter = 40000;
+                gameState = GameState.WonLevel;
+
             }
 
-            if (bananaCounter == 40000 && health > 0)
+            switch (gameState)
             {
+                case GameState.StartScreen:
+                    //timer = 0;
+                    spriteBatch.Draw(gameLogo,
+                                   new Vector2(graphics.GraphicsDevice.Viewport.Width / 2 - 200, graphics.GraphicsDevice.Viewport.Height / 2 - 450),
+                                   null,
+                                   Color.White,
+                                   0,
+                                   Vector2.Zero,
+                                   1.5f,
+                                   SpriteEffects.None,
+                                   1f);
+                    spriteBatch.DrawString(text,
+                                     "VELCOME TO BANANASPLIT! \n" +
+                                     "Collect 40,000 bananas in the first level, and do it\n as fast as possible!!\n\n" +
+                                     "If you collect dadles you get 4 x bananas!\n" +
+                                     "How it works:\n\n" +
+                                     "Press W to jump\n" +
+                                     "Press A to move left\n" +
+                                     "Press D to move Right\n\n" +
+                                     "PRESS ENTER TO START\n\n\n" +
+                                     "GL HF!"
+                                     ,
+                                     new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 4),
+                                     Color.White,
+                                     0,
+                                     Vector2.Zero,
+                                     1,
+                                     SpriteEffects.None,
+                                     0.8f);
+                    spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
 
-                spriteBatch.DrawString(text,
-                                 "Congrats! You made it to level 2! \n In England they discard around 1.500.000 bananas EVERY day!\n Collect all 1.500.000 to win the game \n and to produce {x_amount} of ice cream!"
-                                 ,
-                                 new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
-                                 Color.White,
-                                 0,
-                                 Vector2.Zero,
-                                 1,
-                                 SpriteEffects.None,
-                                 1f);
-                spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
 
+                    break;
+
+                case GameState.WonLevel:
+                    if (bananaCounter >= 40000)
+                    {
+                        bananaCounter = 40000;
+                    }
+
+                    spriteBatch.DrawString(text,
+                                     "Congrats! You made it to level 2! \n In England they discard around 1.500.000 bananas EVERY day!\n Collect all 1.500.000 to win the game \n and to produce {x_amount} of ice cream!"
+                                     ,
+                                     new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
+                                     Color.White,
+                                     0,
+                                     Vector2.Zero,
+                                     1,
+                                     SpriteEffects.None,
+                                     1f);
+                    spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
+
+                    break;
+                case GameState.GameOver:
+
+                    MediaPlayer.Volume -= 0.1f;
+                    int bananasNeeded = 40000 - bananaCounter;
+
+                    spriteBatch.DrawString(text,
+                                               "You only needed " + string.Format("{0:0,0}", bananasNeeded) + " more bananas, to remove banana-food-waste for today.\n See you again tomorrow for 40,000 more \n BUT you gathered enough bananas to produce {x_amount} of ice cream \n\n PRESS ENTER TO PLAY AGAIN",
+                                               new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
+                                               Color.White,
+                                               0,
+                                               Vector2.Zero,
+                                               1,
+                                               SpriteEffects.None,
+                                               1f);
+
+
+                    spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
+
+                    break;
             }
 
 
 
-            foreach (GameObject gameObject in gameObjects)
+
+
+
+            // GameoverTxT
+            //if (health <= 0 || Player.PlayerPosition.Y >= 1100 || timer <= 0)
+            //{
+            //    MediaPlayer.Volume -= 0.1f;
+
+            //    spriteBatch.DrawString(text,
+            //                           "You only needed " + string.Format("{0:0,0}", bananasNeeded) + " more bananas, to remove banana-food-waste for today.\n See you again tomorrow for 40,000 more \n BUT you gathered enough bananas to produce {x_amount} of ice cream \n\n PRESS ENTER TO PLAY AGAIN",
+            //                           new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
+            //                           Color.White,
+            //                           0,
+            //                           Vector2.Zero,
+            //                           1,
+            //                           SpriteEffects.None,
+            //                           1f);
+
+
+            //    spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
+            //}
+            //if (bananaCounter >= 40000)
+            //{
+            //    bananaCounter = 40000;
+            //}
+
+            //if (bananaCounter == 40000 && health > 0)
+            //{
+
+            //    spriteBatch.DrawString(text,
+            //                     "Congrats! You made it to level 2! \n In England they discard around 1.500.000 bananas EVERY day!\n Collect all 1.500.000 to win the game \n and to produce {x_amount} of ice cream!"
+            //                     ,
+            //                     new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
+            //                     Color.White,
+            //                     0,
+            //                     Vector2.Zero,
+            //                     1,
+            //                     SpriteEffects.None,
+            //                     1f);
+            //    spriteBatch.Draw(background, new Vector2(0, 0), null, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+
+            //}
+
+
+            if (gameState == GameState.StartGame)
             {
-                gameObject.Draw(spriteBatch);
+                foreach (GameObject gameObject in gameObjects)
+                {
+                    gameObject.Draw(spriteBatch);
+                }
             }
+
 
             spriteBatch.End();
 

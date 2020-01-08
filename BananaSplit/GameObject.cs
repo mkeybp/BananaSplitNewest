@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 namespace BananaSplit
 {
     public enum Direction { Right, Left }
+    public enum GameState { StartScreen, StartGame, WonLevel, GameOver }
     public abstract class GameObject
     {
-  
         public Direction direction = new Direction();
         public List<SoundEffect> soundEffects;
 

@@ -170,8 +170,7 @@ namespace BananaSplit
                     direction = Direction.Right;
 
                 }
-
-
+              
                 if (kbState.IsKeyDown(Keys.W) && previousKBState.IsKeyUp(Keys.W) && isGrounded == true)
                 {
                     velocity += new Vector2(0, -250);
@@ -235,7 +234,7 @@ namespace BananaSplit
 
             // Play again
 
-            if (GameWorld.Instance.health <= 0 || Player.PlayerPosition.Y >= 1100 || GameWorld.Instance.bananaCounter == 40000 || GameWorld.Instance.timer <= 0)
+            if (GameWorld.Instance.health <= 0 || Player.PlayerPosition.Y >= 1100 || GameWorld.Instance.bananaCounter == 40000 || GameWorld.Instance.timer <= 0 || GameWorld.Instance.gameState == GameState.GameOver || GameWorld.Instance.gameState == GameState.StartScreen)
             {
                 isAlive = false;
                 if (kbState.IsKeyDown(Keys.Enter))
@@ -246,8 +245,8 @@ namespace BananaSplit
                     isAlive = true;
                     position = new Vector2(100, 100);
                     GameWorld.Instance.timer = 240000f;
-                    MediaPlayer.Volume += 0.1f;
-
+                    MediaPlayer.Volume = 0.5f;
+                    GameWorld.Instance.gameState = GameState.StartGame;
                 }
             }
 
@@ -276,6 +275,8 @@ namespace BananaSplit
             {
                 velocity += new Vector2(0, 10);
             }
+
+
             Move(gameTime);
 
         }
@@ -292,7 +293,7 @@ namespace BananaSplit
             }
             else if (@object is Boost)
             {
-                GameWorld.Instance.bananaCounter += 40000;
+                GameWorld.Instance.bananaCounter += 4000;
             }
             if (@object is Platform)
             {
