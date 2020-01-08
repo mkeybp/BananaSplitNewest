@@ -12,16 +12,18 @@ using System.Threading.Tasks;
 
 namespace BananaSplit
 {
-    class Projectile : GameObject
+    public class Projectile : GameObject
     {
-        public Projectile(Texture2D loadedTexture)
+
+        Vector2 dir;
+        public Projectile(Texture2D loadedTexture, Vector2 Dir)
         {
+            this.dir = Dir;
             // If direction right use this
             if (direction == Direction.Right)
             {
                 this.position = new Vector2(Player.PlayerPosition.X + 180, Player.PlayerPosition.Y + 125);
             }
-
 
             else if (direction == Direction.Left)
             {
@@ -30,23 +32,13 @@ namespace BananaSplit
 
             sprite = loadedTexture;
             isAlive = true;
+            this.speed = 1f;
         }
-
         private void UpdateProjectiles()
         {
-            if (direction == Direction.Right)
+              if (isAlive)
             {
-                velocity = new Vector2(10, 0);
-
-            }
-            if (direction == Direction.Left)
-            {
-                velocity = new Vector2(-10, 0);
-
-            }
-            if (isAlive)
-            {
-                position += velocity;
+                position += this.dir * speed;
 
                 Rectangle viewPortRect = new Rectangle(0, 0, GameWorld.Instance.graphics.GraphicsDevice.Viewport.Width, GameWorld.Instance.graphics.GraphicsDevice.Viewport.Height);
                 if (!viewPortRect.Contains(new Point((int)position.X, (int)position.Y)))
@@ -65,7 +57,6 @@ namespace BananaSplit
         public override void Update(GameTime gameTime)
         {
             UpdateProjectiles();
-            Debug.WriteLine(direction);
         }
 
         public override void OnCollision(GameObject @object)

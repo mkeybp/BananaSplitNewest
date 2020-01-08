@@ -14,11 +14,7 @@ namespace BananaSplit
     public enum Direction { Right, Left }
     public abstract class GameObject
     {
-   
-
-
-
-
+  
         public Direction direction = new Direction();
         public List<SoundEffect> soundEffects;
 
@@ -32,9 +28,8 @@ namespace BananaSplit
 
         public bool isAlive;
 
-        //protected Vector2[] positions;
+        public Vector2 velo;
 
-        //protected Texture2D platform;
 
         public int health;
 

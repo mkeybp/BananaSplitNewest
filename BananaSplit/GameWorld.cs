@@ -14,6 +14,7 @@ namespace BananaSplit
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+    /// 
     public class GameWorld : Game
     {
         public List<GameObject> gameObjects = new List<GameObject>();
@@ -29,23 +30,15 @@ namespace BananaSplit
         public int bananaCounter;
         public int health;
         private SpriteFont text;
-        //public List<SoundEffect> soundEffects;
 
         public bool level = true;
 
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public float timer = 2000f;
+        public float timer = 240000f;   // Milliseconds
 
-        public void Timer()
-        {
-
-            if (timer <= 0)
-            {
-                timer = 0;
-            }
-        }
+     
         public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -61,7 +54,9 @@ namespace BananaSplit
         /// and initialize them as well.
         /// </summary>
         /// 
-    
+        public static Platform pl;
+
+        //Platform pl = new Platform(Vector2 position);
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -70,6 +65,10 @@ namespace BananaSplit
             graphics.PreferredBackBufferHeight = 1080;
             graphics.ApplyChanges();
             gameObjects.Add(new Player());
+
+            //gameObjects.Add(new Platform(pl.position));
+
+
 
             base.Initialize();
         }
@@ -169,8 +168,6 @@ namespace BananaSplit
             }
 
 
-
-
             #endregion Spawn platforms, enemys, loot
 
 
@@ -205,6 +202,7 @@ namespace BananaSplit
             // TODO: Unload any non ContentManager content here
         }
 
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -212,9 +210,13 @@ namespace BananaSplit
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // Countdown timer
+            timer -= gameTime.ElapsedGameTime.Milliseconds;
 
-
-
+            if (timer <= 0)
+            {
+                timer = 0;
+            }
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -282,7 +284,10 @@ namespace BananaSplit
 
 
             // Timer
-            spriteBatch.DrawString(text, "Time left: " + timer--, new Vector2(15, 130), Color.White);
+            //spriteBatch.DrawString(text, "Time left: " + timer, new Vector2(15, 130), Color.White);
+
+            spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.White);
+
 
 
 

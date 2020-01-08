@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BananaSplit
 {
-    class Platform : GameObject
+    public class Platform : GameObject
     {
         public Platform(Vector2 position)
         {
@@ -19,9 +19,6 @@ namespace BananaSplit
 
         public void Initialize(GameTime gameTime)
         {
-            //platforms.Add(new Platform());
-
-
         }
         public override void LoadContent(ContentManager content)
         {

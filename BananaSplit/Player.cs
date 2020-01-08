@@ -61,10 +61,8 @@ namespace BananaSplit
 
             soundEffects.Add(content.Load<SoundEffect>("gunshot"));
 
-            //soundEffects[0].Play();
             var instance = soundEffects[0].CreateInstance();
-            //instance.IsLooped = true;
-            //instance.Play();
+
         }
 
         public override void Update(GameTime gameTime)
@@ -87,6 +85,42 @@ namespace BananaSplit
             }
             isGrounded = false;
 
+            //#if DEBUG
+
+            //            switch (direction)
+            //            {
+            //                case Direction.Right:
+            //                    for (int i = 0; i < sprites.Length; i++)
+            //                    {
+            //                        sprites[i] = content.Load<Texture2D>(i + 1 + ("player_debug"));
+            //                    }
+            //                    break;
+            //                case Direction.Left:
+            //                    for (int i = 0; i < sprites.Length; i++)
+            //                    {
+            //                        sprites[i] = content.Load<Texture2D>(i + 1 + ("player_left_debug"));
+            //                    }
+            //                    break;
+            //            }
+            //#else
+            //            switch (direction)
+            //            {
+            //                case Direction.Right:
+            //                    for (int i = 0; i < sprites.Length; i++)
+            //                    {
+            //                        sprites[i] = content.Load<Texture2D>(i + 1 + ("player"));
+            //                    }
+            //                    break;
+            //                case Direction.Left:
+            //                    for (int i = 0; i < sprites.Length; i++)
+            //                    {
+            //                        sprites[i] = content.Load<Texture2D>(i + 1 + ("player_left"));
+            //                    }
+            //                    break;
+            //            }
+            //#endif
+
+
             switch (direction)
             {
                 case Direction.Right:
@@ -101,8 +135,10 @@ namespace BananaSplit
                         sprites[i] = content.Load<Texture2D>(i + 1 + ("player_left"));
                     }
                     break;
+
             }
         }
+
         private void HandleInput(GameTime gameTime)
         {
             velocity = Vector2.Zero;
@@ -115,7 +151,7 @@ namespace BananaSplit
                 if (kbState.IsKeyDown(Keys.L))
                 {
                     GameWorld.Instance.level = false;
-                 }
+                }
                 if (kbState.IsKeyDown(Keys.T))
                 {
                     GameWorld.Instance.level = true;
@@ -132,7 +168,10 @@ namespace BananaSplit
                 {
                     velocity += new Vector2(1, 0);
                     direction = Direction.Right;
+
                 }
+                Debug.WriteLine(direction);
+
 
                 if (kbState.IsKeyDown(Keys.W) && previousKBState.IsKeyUp(Keys.W) && isGrounded == true)
                 {
@@ -142,18 +181,46 @@ namespace BananaSplit
 
                 if (kbState.IsKeyDown(Keys.Space) && previousKBState.IsKeyUp(Keys.Space))
                 {
-                    Projectile projectile = new Projectile(content.Load<Texture2D>("stone"));
-                    GameWorld.Instance.gameObjectsToAdd.Add(projectile);
+                    Vector2 projectileDirection;
 
                     if (direction == Direction.Right)
                     {
                         sprite = content.Load<Texture2D>("player_shooting");
+                        projectileDirection = new Vector2(10, 0);
                     }
                     else
+                    {
                         sprite = content.Load<Texture2D>("player_shooting_left");
+                        projectileDirection = new Vector2(-10, 0);
+                    }
+
+                    Projectile projectile = new Projectile(content.Load<Texture2D>("stone"), projectileDirection);
+                    GameWorld.Instance.gameObjectsToAdd.Add(projectile);
 
                     soundEffects[0].CreateInstance().Play();
                     SoundEffect.MasterVolume = 0.5f;
+
+
+                    //#if DEBUG
+                    //                    if (direction == Direction.Right)
+                    //                    {
+                    //                        sprite = content.Load<Texture2D>("player_shooting_debug");
+                    //                        projectileDirection = new Vector2(10, 0);
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        sprite = content.Load<Texture2D>("player_shooting_left_debug");
+                    //                        projectileDirection = new Vector2(-10, 0);
+                    //                    }
+                    //#else
+                    //                    if (direction == Direction.Right)
+                    //                    {
+                    //                        sprite = content.Load<Texture2D>("player_shooting");
+                    //                    }
+                    //                    else
+                    //                        sprite = content.Load<Texture2D>("player_shooting_left");
+                    //#endif
+
                 }
 
 
@@ -169,7 +236,7 @@ namespace BananaSplit
 
             // Play again
 
-            if (GameWorld.Instance.health <= 0 || Player.PlayerPosition.Y >= 1100 || GameWorld.Instance.bananaCounter == 40000)
+            if (GameWorld.Instance.health <= 0 || Player.PlayerPosition.Y >= 1100 || GameWorld.Instance.bananaCounter == 40000 || GameWorld.Instance.timer <= 0)
             {
                 isAlive = false;
                 if (kbState.IsKeyDown(Keys.Enter))
@@ -179,6 +246,7 @@ namespace BananaSplit
                     Enemy.EnemyPosition = new Vector2(1500, 760);
                     isAlive = true;
                     position = new Vector2(100, 100);
+                    GameWorld.Instance.timer = 240000f;
                 }
             }
 
@@ -215,8 +283,6 @@ namespace BananaSplit
         {
             if (@object is Loot)
             {
-                /// Er sat lavere end der står i raporten, da loot ikke bliver fjernet ved collision
-                /// Så det går alt for hurtigt med at samle alle bananer op
                 GameWorld.Instance.bananaCounter += 1000;
             }
             else if (@object is Enemy)
@@ -225,7 +291,7 @@ namespace BananaSplit
             }
             else if (@object is Boost)
             {
-                GameWorld.Instance.bananaCounter += 4000;
+                GameWorld.Instance.bananaCounter += 40000;
             }
             if (@object is Platform)
             {

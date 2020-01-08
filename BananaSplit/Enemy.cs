@@ -120,11 +120,11 @@ namespace BananaSplit
 
 
 
-            // # Simple EnemyMove #
+            // # Simple EnemyMove, but it "teleports" instead of movning #
             //distance.X = Player.PlayerPosition.X - this.position.X;
             //distance.Y = Player.PlayerPosition.Y - this.position.Y;
 
-            ////// Enemys only hunts you if your in a certain range
+            //// Enemys only hunts you if your in a certain range
             //if (distance.X >= -950)
             //{
             //    direction = new Vector2(Player.PlayerPosition.X, Player.PlayerPosition.Y);
