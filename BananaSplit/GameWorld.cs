@@ -28,6 +28,8 @@ namespace BananaSplit
         private Texture2D background;
         private Texture2D heartFull;
         private Texture2D bananaPoints;
+        private Texture2D timerImage;
+
         private Texture2D gameLogo;
         public int bananaCounter;
         public int health;
@@ -90,6 +92,8 @@ namespace BananaSplit
             text = Content.Load<SpriteFont>("gameOver");
             song = Content.Load<Song>("By the Fire");
             gameLogo = Content.Load<Texture2D>("bananasplit_logo");
+            timerImage = Content.Load<Texture2D>("clock");
+
 
             MediaPlayer.Play(song);
             MediaPlayer.Volume = 0.5f;
@@ -297,16 +301,17 @@ namespace BananaSplit
                     spriteBatch.Draw(heartFull, new Vector2(90, 15), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
 
                 }
-
-
                 // Timer
+                spriteBatch.Draw(timerImage, new Vector2(10, 130), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
+
                 if (timer < 4000)
                 {
-                    spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.Yellow, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
+
+                    spriteBatch.DrawString(text, ": " + string.Format("{0:0:00:000}", timer), new Vector2(67, 130), Color.Yellow, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
 
                 }
                 else
-                    spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
+                    spriteBatch.DrawString(text, ": " + string.Format("{0:0:00:000}", timer), new Vector2(67, 130), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
 
                 spriteBatch.Draw(bananaPoints, new Vector2(10, 75), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
                 spriteBatch.DrawString(text, ": " + bananaCounter, new Vector2(65, 65), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
