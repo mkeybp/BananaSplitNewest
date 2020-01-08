@@ -28,9 +28,6 @@ namespace BananaSplit
 
         public bool isAlive;
 
-        public Vector2 velo;
-
-
         public int health;
 
         //Frames per seconds, bruges til animation af sprites.
@@ -63,7 +60,7 @@ namespace BananaSplit
         {
             get
             {
-                return new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
+                return new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height - 10);
             }
         }
         public abstract void OnCollision(GameObject other);

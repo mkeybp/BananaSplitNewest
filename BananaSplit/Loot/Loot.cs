@@ -27,7 +27,6 @@ namespace BananaSplit
 
         }
 
-
         public override void OnCollision(GameObject @object)
         {
             if (@object is Player)

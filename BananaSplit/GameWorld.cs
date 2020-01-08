@@ -38,7 +38,7 @@ namespace BananaSplit
 
         public float timer = 240000f;   // Milliseconds
 
-     
+
         public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -90,6 +90,7 @@ namespace BananaSplit
 
 
             MediaPlayer.Play(song);
+            MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
 
             #region Spawn platforms, enemys, loot
@@ -216,6 +217,7 @@ namespace BananaSplit
             if (timer <= 0)
             {
                 timer = 0;
+
             }
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -284,8 +286,6 @@ namespace BananaSplit
 
 
             // Timer
-            //spriteBatch.DrawString(text, "Time left: " + timer, new Vector2(15, 130), Color.White);
-
             spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.White);
 
 
@@ -299,8 +299,10 @@ namespace BananaSplit
             // GameoverTxT
             if (health <= 0 || Player.PlayerPosition.Y >= 1100 || timer <= 0)
             {
+                MediaPlayer.Volume -= 0.1f;
+
                 spriteBatch.DrawString(text,
-                                       "You only needed " + bananasNeeded + " more bananas, to remove banana-food-waste for today.\n See you again tomorrow for 40.000 more \n BUT you gathered enough bananas to produce {x_amount} of ice cream \n\n PRESS ENTER TO PLAY AGAIN",
+                                       "You only needed " + string.Format("{0:0,0}", bananasNeeded) + " more bananas, to remove banana-food-waste for today.\n See you again tomorrow for 40,000 more \n BUT you gathered enough bananas to produce {x_amount} of ice cream \n\n PRESS ENTER TO PLAY AGAIN",
                                        new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
                                        Color.White,
                                        0,
@@ -317,12 +319,13 @@ namespace BananaSplit
             {
                 bananaCounter = 40000;
             }
+
             if (bananaCounter == 40000 && health > 0)
             {
 
                 spriteBatch.DrawString(text,
                                  "Congrats! You made it to level 2! \n In England they discard around 1.500.000 bananas EVERY day!\n Collect all 1.500.000 to win the game \n and to produce {x_amount} of ice cream!"
-,
+                                 ,
                                  new Vector2(150, graphics.GraphicsDevice.Viewport.Height / 2),
                                  Color.White,
                                  0,

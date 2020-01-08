@@ -19,7 +19,6 @@ namespace BananaSplit
         public Projectile(Texture2D loadedTexture, Vector2 Dir)
         {
             this.dir = Dir;
-            // If direction right use this
             if (direction == Direction.Right)
             {
                 this.position = new Vector2(Player.PlayerPosition.X + 180, Player.PlayerPosition.Y + 125);
@@ -36,7 +35,7 @@ namespace BananaSplit
         }
         private void UpdateProjectiles()
         {
-              if (isAlive)
+            if (isAlive)
             {
                 position += this.dir * speed;
 

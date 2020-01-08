@@ -22,9 +22,6 @@ namespace BananaSplit
         }
         public override void LoadContent(ContentManager content)
         {
-
-
-
             // Et spritearray Instantieres
             sprites = new Texture2D[1];
 

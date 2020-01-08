@@ -61,7 +61,7 @@ namespace BananaSplit
 
             soundEffects.Add(content.Load<SoundEffect>("gunshot"));
 
-            var instance = soundEffects[0].CreateInstance();
+            //var instance = soundEffects[0].CreateInstance();
 
         }
 
@@ -170,7 +170,6 @@ namespace BananaSplit
                     direction = Direction.Right;
 
                 }
-                Debug.WriteLine(direction);
 
 
                 if (kbState.IsKeyDown(Keys.W) && previousKBState.IsKeyUp(Keys.W) && isGrounded == true)
@@ -247,6 +246,8 @@ namespace BananaSplit
                     isAlive = true;
                     position = new Vector2(100, 100);
                     GameWorld.Instance.timer = 240000f;
+                    MediaPlayer.Volume += 0.1f;
+
                 }
             }
 
@@ -297,6 +298,7 @@ namespace BananaSplit
             {
 
                 Platform P = (Platform)@object;
+
                 //Playeren rører venstre side af platformen
                 // hvis X værdien af players højre side + fart > platformens venstre side kolliderer objekterne
                 // hvis X værdien af platformens venstre side er større end playerens venstre side er der lavet et dobbelttjek for at spilleren er på venstre side af platformen
@@ -305,15 +307,12 @@ namespace BananaSplit
 
                 if (this.Rectangle.Right + this.velocity.X > P.Rectangle.Left && this.Rectangle.Left < P.Rectangle.Left && this.Rectangle.Top < P.Rectangle.Bottom && this.Rectangle.Bottom > P.Rectangle.Top)
                 {
-
-
-
+                  //this.position += new Vector2(10, 0);
+ 
                 }
                 //Playeren rører højre side af platformen - samme metode som ovenfor, men onvendt.
                 if (this.Rectangle.Left + this.velocity.X < P.Rectangle.Right && this.Rectangle.Right > P.Rectangle.Right && this.Rectangle.Top < P.Rectangle.Bottom && this.Rectangle.Bottom > P.Rectangle.Top)
                 {
-
-
                 }
                 //Playeren rører toppen af platformen
                 if (this.Rectangle.Bottom + this.velocity.Y >= P.Rectangle.Top && this.Rectangle.Top < P.Rectangle.Top && this.Rectangle.Left < P.Rectangle.Right && this.Rectangle.Right > P.Rectangle.Left)
@@ -324,28 +323,24 @@ namespace BananaSplit
                 if (this.Rectangle.Top + this.velocity.Y <= P.Rectangle.Bottom && this.Rectangle.Bottom > P.Rectangle.Bottom && this.Rectangle.Left < P.Rectangle.Right && this.Rectangle.Right > P.Rectangle.Left)
                 {
                     this.velocity.Y = 0;
-
-
                 }
 
-                //Rectangle collisionRect = Rectangle.Intersects(Rectangle., P.Rectangle);
-                //if (intersection.Height > 0)
-                //{
-                //    player.Rect -= intersection.Height;
-                //}
 
 
                 //if (this.Rectangle.Bottom > P.Rectangle.Top && this.Rectangle.Bottom < P.Rectangle.Bottom) // Object is above
-                //    player.Rect.Pos += new Vector2(0, platform.Top - player.Bottom);
+                //{
+                //    isGrounded = true;
+                //    //this.position += new Vector2(0, P.Rectangle.Top - this.Rectangle.Bottom);
+                //}
+                //if (this.Rectangle.Top < P.Rectangle.Bottom && this.Rectangle.Top > P.Rectangle.Top) // Object below
+                //    this.position += new Vector2(0, 10);
 
-                //else if (player.Top < platform.Bottom && player.Top > platform.Top) // Object below
-                //    player.Rect.Pos += new Vector2(0, platform.Bottom - player.Top);
+                //if (this.Rectangle.Left < P.Rectangle.Right && this.Rectangle.Left > P.Rectangle.Left) // Object to the left
+                //    this.position += new Vector2(10, 0);
 
-                //if (player.Left < platform.Right && player.Left > platform.Left) // Object to the left
-                //    player.Rect.Pos += new Vector2(platform.Right - player.Left, 0);
+                //if (this.Rectangle.Right > P.Rectangle.Left && this.Rectangle.Right < P.Rectangle.Right) // Object to the right
+                //    this.position += new Vector2(-10, 0);
 
-                //else if (player.Right > platform.Left && player.Right < platform.Right) // Object to the right
-                //    player.Rect.Pos += new Vector2(platform.Left - player.Right, 0);
 
 
             }
