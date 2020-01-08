@@ -286,7 +286,7 @@ namespace BananaSplit
 
 
             // Timer
-            spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.White);
+            spriteBatch.DrawString(text, "Time left: " + string.Format("{0:0:00:000}", timer), new Vector2(15, 130), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
 
 
 
