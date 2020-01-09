@@ -170,7 +170,14 @@ namespace BananaSplit
                     direction = Direction.Right;
 
                 }
-              
+
+
+                if (kbState.IsKeyDown(Keys.M))
+                {
+                    GameWorld.Instance.gameState = GameState.Level2;
+
+                }
+
                 if (kbState.IsKeyDown(Keys.W) && previousKBState.IsKeyUp(Keys.W) && isGrounded == true)
                 {
                     velocity += new Vector2(0, -250);

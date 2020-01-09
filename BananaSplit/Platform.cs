@@ -37,7 +37,7 @@ namespace BananaSplit
 
         public override void Update(GameTime gameTime)
         {
-            //foreach()
+
         }
 
         public override Rectangle CollisionBox

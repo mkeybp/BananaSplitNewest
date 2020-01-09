@@ -60,7 +60,6 @@ namespace BananaSplit
         /// 
         public static Platform pl;
 
-        //Platform pl = new Platform(Vector2 position);
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -71,6 +70,8 @@ namespace BananaSplit
             gameObjects.Add(new Player());
 
             //gameObjects.Add(new Platform(pl.position));
+
+            //Platform
 
 
 
@@ -100,86 +101,135 @@ namespace BananaSplit
             MediaPlayer.IsRepeating = true;
 
             #region Spawn platforms, enemys, loot
-            //Platform
-            if (level == true)
-            {
-                gameObjects.Add(new Platform(new Vector2(-295, 1000)));
-                gameObjects.Add(new Platform(new Vector2(-295, 900)));
-                gameObjects.Add(new Platform(new Vector2(-295, 800)));
-                gameObjects.Add(new Platform(new Vector2(-295, 700)));
-                gameObjects.Add(new Platform(new Vector2(-295, 600)));
-                gameObjects.Add(new Platform(new Vector2(-295, 500)));
+            gameObjects.Add(new Platform(new Vector2(-295, 1000)));
+            gameObjects.Add(new Platform(new Vector2(-295, 900)));
+            gameObjects.Add(new Platform(new Vector2(-295, 800)));
+            gameObjects.Add(new Platform(new Vector2(-295, 700)));
+            gameObjects.Add(new Platform(new Vector2(-295, 600)));
+            gameObjects.Add(new Platform(new Vector2(-295, 500)));
 
-                gameObjects.Add(new Platform(new Vector2(0, 1000)));
-                gameObjects.Add(new Platform(new Vector2(295, 1000)));
-                gameObjects.Add(new Platform(new Vector2(590, 1000)));
-                gameObjects.Add(new Platform(new Vector2(885, 1000)));
-                gameObjects.Add(new Platform(new Vector2(1180, 1000)));
-                gameObjects.Add(new Platform(new Vector2(1475, 1000)));
+            gameObjects.Add(new Platform(new Vector2(0, 1000)));
+            gameObjects.Add(new Platform(new Vector2(295, 1000)));
+            gameObjects.Add(new Platform(new Vector2(590, 1000)));
+            gameObjects.Add(new Platform(new Vector2(885, 1000)));
+            gameObjects.Add(new Platform(new Vector2(1180, 1000)));
+            gameObjects.Add(new Platform(new Vector2(1475, 1000)));
 
-                gameObjects.Add(new Platform(new Vector2(1770, 500)));
-                gameObjects.Add(new Platform(new Vector2(1770, 900)));
-                gameObjects.Add(new Platform(new Vector2(2065, 800)));
-                gameObjects.Add(new Platform(new Vector2(2360, 750)));
-                gameObjects.Add(new Platform(new Vector2(2655, 700)));
-                gameObjects.Add(new Platform(new Vector2(2950, 800)));
-                gameObjects.Add(new Platform(new Vector2(3245, 900)));
+            gameObjects.Add(new Platform(new Vector2(1800, 400)));
+            gameObjects.Add(new Platform(new Vector2(1770, 900)));
+            gameObjects.Add(new Platform(new Vector2(2065, 800)));
+            gameObjects.Add(new Platform(new Vector2(2360, 750)));
+            gameObjects.Add(new Platform(new Vector2(2655, 700)));
+            gameObjects.Add(new Platform(new Vector2(2950, 800)));
+            gameObjects.Add(new Platform(new Vector2(3245, 900)));
 
-                gameObjects.Add(new Platform(new Vector2(3800, 900)));
-                gameObjects.Add(new Platform(new Vector2(4400, 900)));
-                gameObjects.Add(new Platform(new Vector2(4700, 800)));
-                gameObjects.Add(new Platform(new Vector2(5000, 600)));
-                gameObjects.Add(new Platform(new Vector2(5300, 400)));
-                gameObjects.Add(new Platform(new Vector2(6500, 900)));
+            gameObjects.Add(new Platform(new Vector2(3800, 900)));
+            gameObjects.Add(new Platform(new Vector2(4400, 900)));
+            gameObjects.Add(new Platform(new Vector2(4700, 800)));
+            gameObjects.Add(new Platform(new Vector2(5000, 600)));
+            gameObjects.Add(new Platform(new Vector2(5300, 400)));
 
-                gameObjects.Add(new Platform(new Vector2(6700, 900)));
-                gameObjects.Add(new Platform(new Vector2(6900, 900)));
-                gameObjects.Add(new Platform(new Vector2(7500, 700)));
-                gameObjects.Add(new Platform(new Vector2(8200, 1000)));
-                gameObjects.Add(new Platform(new Vector2(8600, 900)));
-                gameObjects.Add(new Platform(new Vector2(8600, 700)));
-                gameObjects.Add(new Platform(new Vector2(8600, 500)));
-                gameObjects.Add(new Platform(new Vector2(8600, 300)));
-                gameObjects.Add(new Platform(new Vector2(8600, 100)));
-                gameObjects.Add(new Platform(new Vector2(10900, 900)));
+            gameObjects.Add(new Platform(new Vector2(6500, 900)));
+            gameObjects.Add(new Platform(new Vector2(6700, 900)));
+            gameObjects.Add(new Platform(new Vector2(6900, 900)));
+            gameObjects.Add(new Platform(new Vector2(7500, 700)));
+            gameObjects.Add(new Platform(new Vector2(8200, 1000)));
+            gameObjects.Add(new Platform(new Vector2(8600, 900)));
+            gameObjects.Add(new Platform(new Vector2(8600, 700)));
+            gameObjects.Add(new Platform(new Vector2(8600, 500)));
+            gameObjects.Add(new Platform(new Vector2(8600, 300)));
+            gameObjects.Add(new Platform(new Vector2(8600, 100)));
 
-                //Enemy
-                gameObjects.Add(new Enemy(new Vector2(2365, 500)));
+            gameObjects.Add(new Platform(new Vector2(10900, 900)));
+            gameObjects.Add(new Platform(new Vector2(11000, 900)));
+            gameObjects.Add(new Platform(new Vector2(11500, 800)));
+            gameObjects.Add(new Platform(new Vector2(11900, 750)));
+            gameObjects.Add(new Platform(new Vector2(12200, 700)));
 
-                gameObjects.Add(new Enemy(new Vector2(2000, 500)));
+            gameObjects.Add(new Platform(new Vector2(13200, 1000)));
+            gameObjects.Add(new Platform(new Vector2(13500, 900)));
 
-
-                //gameObjects.Add(new Enemy(new Vector2(1050, 750)));
-                //gameObjects.Add(new Enemy(new Vector2(1400, 750)));
-
-
-                //Loot
-                gameObjects.Add(new Loot(new Vector2(2065, 720)));
-
-
-                gameObjects.Add(new Loot(new Vector2(3000, 900)));
-                gameObjects.Add(new Loot(new Vector2(9000, 100)));
-                gameObjects.Add(new Loot(new Vector2(9050, 150)));
-                gameObjects.Add(new Loot(new Vector2(9100, 200)));
-                gameObjects.Add(new Loot(new Vector2(9150, 250)));
-                gameObjects.Add(new Loot(new Vector2(9200, 300)));
-                gameObjects.Add(new Loot(new Vector2(9250, 350)));
-                gameObjects.Add(new Loot(new Vector2(9300, 400)));
-                gameObjects.Add(new Loot(new Vector2(9350, 450)));
-                gameObjects.Add(new Loot(new Vector2(9400, 500)));
-
-                //Boost
-                gameObjects.Add(new Boost(new Vector2(1900, 425)));
-            }
-
-            // Level 2
-
-            else if (level == false)
-            {
-                gameObjects.Add(new Platform(new Vector2(-295, 1000)));
+            gameObjects.Add(new Platform(new Vector2(13800, 800)));
+            gameObjects.Add(new Platform(new Vector2(14100, 800)));
+            gameObjects.Add(new Platform(new Vector2(14400, 800)));
+            gameObjects.Add(new Platform(new Vector2(14700, 800)));
+            gameObjects.Add(new Platform(new Vector2(15000, 800)));
+            gameObjects.Add(new Platform(new Vector2(15300, 800)));
+            gameObjects.Add(new Platform(new Vector2(15600, 800)));
 
 
-            }
+            //Enemy
+            gameObjects.Add(new Enemy(new Vector2(2000, 600)));
+            gameObjects.Add(new Enemy(new Vector2(2365, 500)));
+
+            gameObjects.Add(new Enemy(new Vector2(4700, 500)));
+            gameObjects.Add(new Enemy(new Vector2(5300, 100)));
+
+            gameObjects.Add(new Enemy(new Vector2(8200, 600)));
+            gameObjects.Add(new Enemy(new Vector2(8400, 500)));
+
+            gameObjects.Add(new Enemy(new Vector2(11500, 500)));
+
+            gameObjects.Add(new Enemy(new Vector2(15600, 0)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 100)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 200)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 300)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 400)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 500)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 600)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 700)));
+            gameObjects.Add(new Enemy(new Vector2(15600, 800)));
+
+
+            //gameObjects.Add(new Enemy(new Vector2(1050, 750)));
+            //gameObjects.Add(new Enemy(new Vector2(1400, 750)));
+
+
+            //Loot
+            gameObjects.Add(new Loot(new Vector2(2065, 720)));
+            gameObjects.Add(new Loot(new Vector2(2700, 150)));
+
+            gameObjects.Add(new Loot(new Vector2(5850, 200)));
+            gameObjects.Add(new Loot(new Vector2(6100, 500)));
+
+            gameObjects.Add(new Loot(new Vector2(6900, 720)));
+            gameObjects.Add(new Loot(new Vector2(7500, 520)));
+
+            gameObjects.Add(new Loot(new Vector2(9000, 25)));
+            gameObjects.Add(new Loot(new Vector2(9150, 100)));
+            gameObjects.Add(new Loot(new Vector2(9300, 150)));
+            gameObjects.Add(new Loot(new Vector2(9450, 200)));
+            gameObjects.Add(new Loot(new Vector2(9600, 250)));
+            gameObjects.Add(new Loot(new Vector2(9750, 300)));
+            gameObjects.Add(new Loot(new Vector2(9900, 350)));
+            gameObjects.Add(new Loot(new Vector2(10050, 400)));
+            gameObjects.Add(new Loot(new Vector2(10200, 450)));
+            gameObjects.Add(new Loot(new Vector2(10350, 500)));
+            gameObjects.Add(new Loot(new Vector2(10500, 550)));
+            gameObjects.Add(new Loot(new Vector2(10650, 600)));
+            gameObjects.Add(new Loot(new Vector2(10800, 650)));
+
+            gameObjects.Add(new Loot(new Vector2(14000, 720)));
+            gameObjects.Add(new Loot(new Vector2(14256, 562)));
+            gameObjects.Add(new Loot(new Vector2(14648, 582)));
+            gameObjects.Add(new Loot(new Vector2(15046, 456)));
+            gameObjects.Add(new Loot(new Vector2(15206, 555)));
+            gameObjects.Add(new Loot(new Vector2(14384, 685)));
+            gameObjects.Add(new Loot(new Vector2(14956, 322)));
+            gameObjects.Add(new Loot(new Vector2(15345, 645)));
+            gameObjects.Add(new Loot(new Vector2(15100, 370)));
+            gameObjects.Add(new Loot(new Vector2(15622, 460)));
+
+            //Boost
+            gameObjects.Add(new Boost(new Vector2(1500, 200)));
+
+            gameObjects.Add(new Boost(new Vector2(7800, 100)));
+
+            gameObjects.Add(new Boost(new Vector2(16200, 500)));
+            gameObjects.Add(new Boost(new Vector2(16400, 700)));
+            gameObjects.Add(new Boost(new Vector2(16600, 900)));
+
+            // Level 2 TO COME
 
 
             #endregion Spawn platforms, enemys, loot
@@ -367,8 +417,12 @@ namespace BananaSplit
                 case GameState.WonLevel:
                     if (bananaCounter >= 40000)
                     {
+                        gameState = GameState.Level1;
                         bananaCounter = 40000;
                     }
+                    else
+                        gameState = GameState.Level2;
+
 
                     spriteBatch.DrawString(text,
                                      "Congrats! You made it to level 2! \n In England they discard around 1.500.000 bananas EVERY day!\n Collect all 1.500.000 to win the game \n and to produce {x_amount} of ice cream!"

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace BananaSplit
 {
     public enum Direction { Right, Left }
-    public enum GameState { StartScreen, StartGame, WonLevel, GameOver }
+    public enum GameState { StartScreen, StartGame, WonLevel, GameOver, Level1, Level2 }
     public abstract class GameObject
     {
         public Direction direction = new Direction();
